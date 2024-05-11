@@ -1,6 +1,20 @@
 import { EventEmitter } from 'events';
- class Agent extends EventEmitter {}
 
+class Agent extends EventEmitter {
+  constructor(name) {
+      super();
+      this.name = name;
+  }
+
+  performTask(input, history = []) {
+      console.log(`${this.name} começou a trabalhar em: ${input}`);
+      setTimeout(() => {
+          const result = `${this.name} processou: ${input}`;
+          history.push({ agent: this.name, result });
+          this.emit('taskCompleted', input, history);
+      }, 1000); // Simulando trabalho com timeout
+  }
+}
 
 
 // Criação dos agentes
