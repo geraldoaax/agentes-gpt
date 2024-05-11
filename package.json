@@ -1,0 +1,28 @@
+{
+  "name": "agentes-gpt",
+  "version": "1.0.0",
+  "description": "Projeto de Agência de Marketing com Agentes GPT",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js"
+  },
+  "type": "module",
+  "keywords": [
+    "ia",
+    "gpt",
+    "openai",
+    "agentes",
+    "marketing"
+  ],
+  "author": "Geraldo Dutra Neto",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "nodemon": "^3.1.0",
+    "openai": "^4.45.0",
+    "uuid": "^9.0.1"
+  }
+}
