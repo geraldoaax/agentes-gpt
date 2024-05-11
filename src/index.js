@@ -32,15 +32,28 @@ app.post('/iniciar-pesquisa', async (req, res) => {
     return res.status(400).send({ error: 'Dados insuficientes fornecidos.' });
   }
 
+  const userQuestion = `Pesquise informações detalhadas sobre ${tema} na área de ${area}.`;
+
+  console.log(userQuestion)
   try {
-    const completion = await openai.createCompletion({
-      model: "text-davinci-002",
-      prompt: `Pesquise informações detalhadas sobre ${tema} na área de ${area}.`,
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [
+        { role: "system", content: "You are a helpful assistant." },
+        { role: "user", content: userQuestion }
+      ],
       max_tokens: numeroDeCaracteres
     });
 
-    pesquisador.emit('pesquisa', completion.data.choices[0].text);
-    res.status(200).send({ message: "Pesquisa iniciada com sucesso!" });
+    const pesquisaContent = completion.choices[0].message.content;
+
+    console.log(pesquisaContent);  // Log no console
+    
+    pesquisador.emit('pesquisa', pesquisaContent);
+    res.status(200).json({
+      message: "Pesquisa iniciada com sucesso!",
+      pesquisa: pesquisaContent
+    });
   } catch (error) {
     console.error('Erro na API da OpenAI:', error);
     res.status(500).send({ error: 'Erro ao processar a pesquisa' });
